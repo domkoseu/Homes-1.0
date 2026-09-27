@@ -1,47 +1,49 @@
 # Homes-1.0
 
-Java (Paper) port tveho Skript souboru pro system domovu (/homes, /sethome,
-/delhome, /adminhomes) - GUI je postavene na Paper Dialog API misto
-inventory-GUI z puvodniho Skriptu.
+Java (Paper) port of your Skript homes system (/homes, /sethome, /delhome,
+/adminhomes) - the GUI is built on Paper's Dialog API instead of the
+inventory-based GUI from the original Skript.
 
-## Verze / kompatibilita
+## Version / compatibility
 
-Cileno na **Paper 1.21.11** a **26.2**. Dialog API (`io.papermc.paper.dialog`,
-`io.papermc.paper.registry.data.dialog.*`), ktere GUI pouziva, existuje od
-Paper 1.21.7 a je porad soucasti Paperu i na verzi 26.x - pom.xml je nastaveny
-na `1.21.11-R0.1-SNAPSHOT`, ale vysledny JAR (`Homes-1.0.jar`) bezi na obou
-verzich beze zmeny, protoze plugin.yml deklaruje `api-version: '1.21'` a
-zadna z pouzitych trid mezi tim nezmizela ani se nepresunula. Pokud by nejaka
-budouci Paper verze tuto cast API zmenila, staci zvednout `paper.version` v
-pom.xml a znovu zkompilovat - kod samotny by menit nemel.
+Works on **Paper 1.21.7 through 26.2** (and forks like Purpur/Folia). The
+Dialog API (`io.papermc.paper.dialog`, `io.papermc.paper.registry.data.dialog.*`)
+that the GUI uses was added in Paper 1.21.7 and is still part of Paper on the
+26.x line - `pom.xml` builds against `1.21.11-R0.1-SNAPSHOT`, but the
+resulting JAR (`Homes-1.0.jar`) runs unchanged on any server in that range,
+since `plugin.yml` declares `api-version: '1.21'` and none of the classes
+used have moved or been removed in between. If a future Paper release ever
+changes this part of the API, just bump `paper.version` in `pom.xml` and
+recompile - the code itself shouldn't need to change.
+
+Not compatible with 1.21.6 and older (Dialog API doesn't exist there yet).
 
 ## Build
 
-```
-mvn clean package
-```
+(If you're running this from IntelliJ's Maven "Command Line" field, just type
+`clean package` - IntelliJ already prepends `mvn` itself.)
 
-Vysledny JAR: `target/Homes-1.0.jar` - hod do `plugins/`.
+Output JAR: `target/Homes-1.0.jar` - drop it into `plugins/`.
 
-## Prikazy
+## Commands
 
-- `/homes` - otevre GUI se vsemi tvymi domovy (klik na prazdny slot ho rovnou
-  nastavi, klik na existujici otevre Teleport/Delete/Close)
-- `/homes <1-10>` - primo teleportuje (5s countdown, zrusi se pri pohybu)
-- `/sethome <1-10>` - nastavi domov na aktualni pozici
-- `/delhome [1-10]` - smaze domov (bez cisla ukaze pocet nastavenych)
-- `/adminhomes <hrac>` - (permission `homes.admin`) zobrazi a umozni
-  teleportovat se na domovy jineho hrace
+- `/homes` - opens a GUI with all your homes (click an empty slot to set it
+  right there, click an existing one to Teleport / Delete / Close)
+- `/homes <1-10>` - teleports directly (5s countdown, cancels if you move)
+- `/sethome <1-10>` - sets a home at your current position
+- `/delhome [1-10]` - deletes a home (no number shows how many you have set)
+- `/adminhomes <player>` - (permission `homes.admin`) view and teleport to
+  another player's homes
 
-Domovy 6-10 vyzaduji permission `homes.homes.<cislo>` (default: jen op,
-presne jako v puvodnim skriptu).
+Homes 6-10 require the permission `homes.homes.<number>` (default: op only,
+same as the original script).
 
-## Poznamky k portu
+## Porting notes
 
-- GUI z puvodnich "multi action dialog" bloku je 1:1 prevedene na
-  `DialogType.multiAction(...)` s `ActionButton` + `DialogAction.customClick`
-  callbacky - zadna globalni registrace dialogu neni potreba.
-- Countdown teleport (`TeleportTask`) presne kopiruje logiku
-  "loop 5 times -> wait 1s -> check moved" z puvodniho skriptu.
-- Lokace se ukladaji do `plugins/Homes/homes.yml` (misto Skript promennych
-  `{home<index>::<uuid>}`).
+- The GUI from the original "multi action dialog" blocks is a 1:1 port to
+  `DialogType.multiAction(...)` with `ActionButton` + `DialogAction.customClick`
+  callbacks - no global dialog registration needed.
+- The countdown teleport (`TeleportTask`) mirrors the original
+  "loop 5 times -> wait 1s -> check moved" logic exactly.
+- Locations are stored in `plugins/Homes/homes.yml` (instead of the Skript
+  variables `{home<index>::<uuid>}`).
