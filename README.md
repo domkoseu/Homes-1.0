@@ -1,3 +1,4 @@
+<img width="726" height="332" alt="Snímek obrazovky 2026-09-27 020755" src="https://github.com/user-attachments/assets/12a26560-d821-4fc3-b8ec-5bb32877b0e5" />
 # Homes-1.0
 
 Java (Paper) port of your Skript homes system (/homes, /sethome, /delhome,
