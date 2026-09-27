@@ -1,0 +1,36 @@
+name: Homes
+version: '1.0.0'
+main: com.leafsmp.homes.HomesPlugin
+api-version: '1.21'
+author: LeafSMP
+
+commands:
+  homes:
+    description: Otevre menu domovu, nebo teleportuje na dany slot
+    usage: /homes [1-10]
+  sethome:
+    description: Nastavi domov na dane pozici hrace
+    usage: /sethome <1-10>
+  delhome:
+    description: Smaze domov
+    usage: /delhome [1-10]
+  adminhomes:
+    description: Zobrazi domovy jineho hrace (admin)
+    usage: /adminhomes <hrac>
+    permission: homes.admin
+    permission-message: '&cYou dont have permission for this!'
+
+permissions:
+  homes.admin:
+    description: Prohlizeni domovu ostatnich hracu
+    default: op
+  homes.homes.6:
+    default: op
+  homes.homes.7:
+    default: op
+  homes.homes.8:
+    default: op
+  homes.homes.9:
+    default: op
+  homes.homes.10:
+    default: op
